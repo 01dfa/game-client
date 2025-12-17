@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.hc.game_service.config.PreAuthorizeCreatePiece;
 import com.hc.game_service.model.PieceMovementInputDto;
 import com.hc.game_service.model.PieceMovementOutputDto;
 import com.hc.game_service.service.PieceService;
@@ -25,7 +26,7 @@ public class PieceController {
 	}
 
 	@PostMapping("/piece")
-	@PreAuthorize("@jwtSec.hasAuthority(authentication, 'create_piece')")
+	@PreAuthorize("@jwtSec.hasAuthority(authentication, '"+PreAuthorizeCreatePiece.KEY+"')")
 	@ResponseStatus(code = HttpStatus.CREATED)
     ResponseEntity<PieceMovementOutputDto> create (
     		@RequestBody PieceMovementInputDto pieceInput, JwtAuthenticationToken auth) {

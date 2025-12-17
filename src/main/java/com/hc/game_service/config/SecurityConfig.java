@@ -20,6 +20,15 @@ import org.springframework.web.cors.CorsConfigurationSource;
 public class SecurityConfig {
 	@Value("${key-set-uri}")
     private String keySetURI;
+	
+	@Value("${role}")
+	private String ROLE_VALUE;
+	
+	@Value("${permission}")
+	private String PERMISSION_VALUE;
+	
+	@Value("${authorities-claim}")
+	private String AUTHORITIES_CLAIM;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -47,5 +56,11 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    @Bean
+    public ValidatorMapper validatorMapper() {
+        return new ValidatorMapper(AUTHORITIES_CLAIM, ROLE_VALUE, PERMISSION_VALUE);
+    }
+
 }
 
